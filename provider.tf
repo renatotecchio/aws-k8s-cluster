@@ -1,23 +1,20 @@
 terraform {
+  
   required_version = ">=1.0.0, <2.0"
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 4.29.0"
     }
   }
-}
 
-variable "region" {}
-
-locals {
-  project_name = "k8s-cluster"
-  tags = {
-    Project     = local.project_name
-    Owner       = "renatotecchio"
-    Environment = "dev"
-    Terraform   = "true"
+  backend "s3" {
+    region = "eu-west-1"
+    bucket = "terraformstate-renatotecchio"
+    key    = "aws-k8s-cluster"
   }
+
 }
 
 provider "aws" {
@@ -27,10 +24,12 @@ provider "aws" {
   }
 }
 
-terraform {
-  backend "s3" {
-    region = "eu-west-1"                    # TODO substitua pela região onde você criou o bucket
-    bucket = "terraformstate-renatotecchio" # TODO substitua pelo nome que você deu ao bucket
-    key    = "aws-k8s-cluster"
+locals {
+  project_name = "k8s-cluster"
+  tags = {
+    Project     = local.project_name
+    Owner       = "renatotecchio"
+    Environment = "dev"
+    Terraform   = "true"
   }
 }
