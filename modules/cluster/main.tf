@@ -27,25 +27,25 @@ resource "aws_instance" "ec2" {
   subnet_id                   = each.value.subnet_id
   key_name                    = aws_key_pair.kp.key_name
   associate_public_ip_address = var.enable_public_ip
-  monitoring = false
+  monitoring                  = false
   #volume_tags = false
 
 
-root_block_device {
-      encrypted = true
-  }
-
-  ebs_block_device {
-    device_name = "/dev/xvda"
-    volume_size = 8
-    volume_type = "gp2"
-    delete_on_termination = true
+  root_block_device {
     encrypted = true
   }
 
-metadata_options {
+  ebs_block_device {
+    device_name           = "/dev/xvda"
+    volume_size           = 8
+    volume_type           = "gp2"
+    delete_on_termination = true
+    encrypted             = true
+  }
+
+  metadata_options {
     http_tokens = "required"
-  } 
+  }
 
   #user_data_base64 = base64encode(local.user_data)
 
