@@ -1,12 +1,6 @@
-region     = "eu-west-1"
-key_name   = "renatotecchio"
-public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDCro77ZXjPy7b905NdfpyS0W0o+t3yGiP9tpfedxdl7MkcTY98YZxfEfnWqgEemqwIMAbk60/vpMrEogdft2NscQPfz6gTxSjElkRZ7O+zH3rEoj4IFMEg2BD/61/OErgrdphsYBExYLIB/VtY6ZEt2Bq7Ka36IyU27stYErh2o9x4MWIR8x5IhEGddptnjOGOwaZiAq837n3Pwy/mhLfLa67AqZ3ikyg7dq1wEYM/aw4rVAZnAF3s02ihFabEByQgXIGFZnynUxIPpuFLwMPHz9adUTbrJKfw5hdWBZo8wpW76iQVqQmGiM4ICQxQZVSaUdZjjvRgxFKTe3RmG9jAtSKATaGgMlkVk+3bdi8PVo4CApqMhHpqUueJDkIaSdaoMuXmbvL8EDjuMCrZjWYzqVfeol80VAVFiE7bd/BNDkWfWlJmK2LrvbAmo8LNQddYQ5rnOBNEtizpioCEo9oEcZDU5C2vClQ2dLkwTRX5zkGNXKT9jTloViAlgob4JOmoCWE1BOZA7Dq2c/yTWc29AzBexCiiX30XCfY7uOYwlPAGvz66s2VGHc3lhS1Uajx9tzFZ89G/ORcuEcfbi23GwuP/5AvInD/jW08o9yVaeJUQraXRYyIn5zrNN4Bg8SA7taXneqT1U6tCuKjEVuZREQILh7INq9g1UcJ+YIoxgw== renato@renato-Latitude-3400"
-
-#instance_count = "2"
-#instance_type  = "t2.nano"
-instance_type  = "t2.medium"
-
-
-
-#project_name = "k8s-cluster"
-
+region        = "eu-west-1"
+environment   = "dev"
+project_name  = "k8s-cluster"
+owner         = "renatotecchio"
+instance_type = "t3.micro"
+public_key    = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDCro77ZXjPy7b905NdfpyS0W0o+t3yGiP9tpfedxdl7MkcTY98YZxfEfnWqgEemqwIMAbk60/vpMrEogdft2NscQPfz6gTxSjElkRZ7O+zH3rEoj4IFMEg2BD/61/OErgrdphsYBExYLIB/VtY6ZEt2Bq7Ka36IyU27stYErh2o9x4MWIR8x5IhEGddptnjOGOwaZiAq837n3Pwy/mhLfLa67AqZ3ikyg7dq1wEYM/aw4rVAZnAF3s02ihFabEByQgXIGFZnynUxIPpuFLwMPHz9adUTbrJKfw5hdWBZo8wpW76iQVqQmGiM4ICQxQZVSaUdZjjvRgxFKTe3RmG9jAtSKATaGgMlkVk+3bdi8PVo4CApqMhHpqUueJDkIaSdaoMuXmbvL8EDjuMCrZjWYzqVfeol80VAVFiE7bd/BNDkWfWlJmK2LrvbAmo8LNQddYQ5rnOBNEtizpioCEo9oEcZDU5C2vClQ2dLkwTRX5zkGNXKT9jTloViAlgob4JOmoCWE1BOZA7Dq2c/yTWc29AzBexCiiX30XCfY7uOYwlPAGvz66s2VGHc3lhS1Uajx9tzFZ89G/ORcuEcfbi23GwuP/5AvInD/jW08o9yVaeJUQraXRYyIn5zrNN4Bg8SA7taXneqT1U6tCuKjEVuZREQILh7INq9g1UcJ+YIoxgw== renato@renato-Latitude-3400"
