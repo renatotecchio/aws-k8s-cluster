@@ -6,7 +6,7 @@ resource "aws_security_group" "sg" {
   vpc_id      = var.sg_vpc_id
 
   ingress {
-    description = "SSH from source"
+    description = "${each.key} from source"
     from_port   = each.value.sg_from_port
     to_port     = each.value.sg_to_port
     protocol    = each.value.sg_protocol
