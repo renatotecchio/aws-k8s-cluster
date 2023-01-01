@@ -1,31 +1,76 @@
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0"
+resource "aws_vpc" "vpc" {
+  cidr_block                       = var.cidr_vpc
+  enable_dns_hostnames             = true
+  enable_dns_support               = true
+  assign_generated_ipv6_cidr_block = var.enable_ipv6
 
-  name = local.project_name
-  cidr = "10.0.0.0/16"
+  tags = {
+    Name = "${var.prefix}-vpc"
+  }
+}
 
-  azs              = ["${var.region}a", "${var.region}b", "${var.region}c"]
-  public_subnets   = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  private_subnets  = ["10.0.11.0/24", "10.0.12.0/24", "10.0.13.0/24"]
-  database_subnets = ["10.0.21.0/24", "10.0.22.0/24", "10.0.23.0/24"]
+locals {
+  zone = ["a", "b", "c"]
+}
 
-  enable_ipv6 = false
+resource "aws_subnet" "public" {
+  count                   = length(var.azs)
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = element(var.cidr_public, count.index)
+  availability_zone       = element(var.azs, count.index)
+  map_public_ip_on_launch = true
 
-  enable_nat_gateway = false
-  enable_vpn_gateway = false
+  tags = {
+    Name = "${var.prefix}-public-subnet-${element(local.zone, count.index)}"
+  }
+}
 
-  enable_dns_hostnames = true
-  enable_dns_support   = true
+resource "aws_subnet" "private" {
+  count             = length(var.azs)
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = element(var.cidr_private, count.index)
+  availability_zone = element(var.azs, count.index)
 
-  public_subnet_tags = {
-    #Name = "${local.vpc_name}-public"
+  tags = {
+    Name = "${var.prefix}-private-subnet-${element(local.zone, count.index)}"
+  }
+}
+
+resource "aws_subnet" "database" {
+  count             = length(var.azs)
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = element(var.cidr_database, count.index)
+  availability_zone = element(var.azs, count.index)
+
+  tags = {
+    Name = "${var.prefix}-database-subnet-${element(local.zone, count.index)}"
+  }
+}
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = "${var.prefix}-igw"
+  }
+}
+
+resource "aws_route_table" "rt" {
+  vpc_id = aws_vpc.vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
   }
 
-  tags = local.tags
-
-  vpc_tags = {
-    Name = "vpc-${local.project_name}"
+  tags = {
+    Name = "${var.prefix}-rt"
   }
 
+}
+
+resource "aws_route_table_association" "rta" {
+  count          = length(aws_subnet.public)
+  subnet_id      = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.rt.id
 }
