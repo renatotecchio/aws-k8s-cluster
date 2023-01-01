@@ -55,7 +55,7 @@ locals {
   }
 }
 
-module "k8s" {
+module "cluster" {
   source           = "./modules/cluster"
   nodes            = local.nodes
   prefix           = local.prefix
