@@ -1,4 +1,5 @@
-name: 'Cloud Deploy'
+---
+name: 'AWS Cloud Deploy'
 
 on:
   #push:
