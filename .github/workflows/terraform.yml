@@ -14,6 +14,9 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    on:
+      pull_request:
+        - renato
     environment: 
       name: dev
       url: 'https://wwww.teste.com'
@@ -46,10 +49,7 @@ jobs:
       if: endsWith(github.head_ref, '12-reconfigure-terraform-pipeline-new')
       # && github.event_name == 'push'
       run: | 
-        #terraform apply -auto-approve -input=false
-        echo ${{ github.head_ref }}
-        echo ${{ github.event_name }}
-        env
+        echo "Worked"
 
     - name: Show Enviroment variables
       run: | 
