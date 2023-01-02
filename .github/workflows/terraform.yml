@@ -12,13 +12,14 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: ${{ secrets.ENVIROMENT }}
+    environment: laranja
     defaults:
       run:
         shell: bash
     env:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        MAMAMA: ${{ secrets.ENVIROMENT }}
 
     steps:
     - name: Checkout
