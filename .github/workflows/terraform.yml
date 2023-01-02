@@ -12,7 +12,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: laranja
+    environment: ${{ secrets.ENVIROMENT }}
     defaults:
       run:
         shell: bash
