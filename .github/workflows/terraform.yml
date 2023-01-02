@@ -14,7 +14,10 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    #environment: dev
+    environment: 
+      name: dev
+      url: 'https://wwww.teste.com'
+
     defaults:
       run:
         shell: bash
@@ -40,7 +43,7 @@ jobs:
       run: terraform plan -input=false
 
     - name: Terraform Apply
-      if: endsWith(github.ref, '/main')
+      if: endsWith(github.ref, '/12-reconfigure-terraform-pipeline-new')
       # && github.event_name == 'push'
       run: | 
         #terraform apply -auto-approve -input=false
