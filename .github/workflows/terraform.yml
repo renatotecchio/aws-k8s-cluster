@@ -14,9 +14,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    on:
-      pull_request:
-        - renato
+    
     environment: 
       name: dev
       url: 'https://wwww.teste.com'
@@ -57,6 +55,7 @@ jobs:
         echo ${{ github.ref }}
         echo ${{ github.head_ref }}
         echo ${{ github.event_name }}
+        echo ${{ github.repository }}
         env
 
   ansible:
