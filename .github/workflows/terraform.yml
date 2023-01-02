@@ -12,7 +12,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: ${{ secrets.ENV }}
+    environment: ${{ secrets.ENVIROMENT }}
     defaults:
       run:
         shell: bash
@@ -45,5 +45,4 @@ jobs:
         echo ${{ github.ref }}
         echo ${{ github.event_name }}
         env
- 
  
