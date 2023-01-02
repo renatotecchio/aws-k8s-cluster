@@ -12,14 +12,13 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: ${{ secrets.ENVIROMENT }}
+    environment: dev
     defaults:
       run:
         shell: bash
     env:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        MAMAMA: ${{ secrets.ENVIROMENT }}
 
     steps:
     - name: Checkout
@@ -46,4 +45,18 @@ jobs:
         echo ${{ github.ref }}
         echo ${{ github.event_name }}
         env
- 
+  test:
+    name: 'Terraform2'
+    needs: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: stg
+    defaults:
+      run:
+        shell: bash
+    env:
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
