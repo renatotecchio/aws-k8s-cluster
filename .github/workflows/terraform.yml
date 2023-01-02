@@ -4,7 +4,7 @@ name: 'AWS Cloud Deploy'
 on:
   push:
     branches:
-     - main
+     - 12-reconfigure-terraform-pipeline-new
   #pull_request:
 
 permissions:
