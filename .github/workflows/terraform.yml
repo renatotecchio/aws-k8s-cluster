@@ -23,9 +23,6 @@ jobs:
 
     - name: Deploying Terraform
       uses: hashicorp/setup-terraform@v1
-
-    - name: Creating Terraform Workspace
-      run: terraform workspace new dev
      
     - name: Terraform Init
       run: terraform init
@@ -33,6 +30,12 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   
+    - name: Creating Terraform Workspace
+      run: terraform workspace new dev
+      env:
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+
     - name: Terraform Plan
       run: terraform plan -input=false
       env:
