@@ -47,7 +47,15 @@ jobs:
       # && github.event_name == 'push'
       run: | 
         #terraform apply -auto-approve -input=false
+        echo ${{ github.head_ref }}
+        echo ${{ github.event_name }}
+        env
+
+    - name: Show Enviroment variables
+      run: | 
+        #terraform apply -auto-approve -input=false
         echo ${{ github.ref }}
+        echo ${{ github.head_ref }}
         echo ${{ github.event_name }}
         env
 
