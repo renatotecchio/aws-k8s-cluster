@@ -43,7 +43,7 @@ jobs:
       run: terraform plan -input=false
 
     - name: Terraform Apply
-      if: endsWith(github.head_ref, '/12-reconfigure-terraform-pipeline-new')
+      if: endsWith(github.head_ref, '12-reconfigure-terraform-pipeline-new')
       # && github.event_name == 'push'
       run: | 
         #terraform apply -auto-approve -input=false
