@@ -27,7 +27,7 @@ resource "aws_instance" "ec2" {
   subnet_id                   = each.value.subnet_id
   key_name                    = aws_key_pair.kp.key_name
   associate_public_ip_address = var.enable_public_ip
-  monitoring                  = false
+  #monitoring                  = false
   #volume_tags = false
 
 
@@ -44,6 +44,7 @@ resource "aws_instance" "ec2" {
   }
 
   metadata_options {
+    http_endpoint = "enabled"
     http_tokens = "required"
   }
 

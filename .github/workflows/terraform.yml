@@ -1,8 +1,10 @@
-name: 'Terraform'
+---
+name: 'AWS Cloud Deploy'
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+     - main
   pull_request:
 
 permissions:
@@ -12,33 +14,64 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: production
+    
+    environment: 
+      name: dev
+      url: 'https://wwww.teste.com'
+
     defaults:
       run:
         shell: bash
+    env:
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+
 
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Setting Terraform
+    - name: Deploying Terraform
       uses: hashicorp/setup-terraform@v1
      
     - name: Terraform Init
       run: terraform init
-      env:
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   
+    - name: Creating Terraform Workspace
+      run: |
+        terraform workspace select ${{ secrets.DEPLOYMENT_ENVIRONMENT }}
+         
+    
     - name: Terraform Plan
       run: terraform plan -input=false
-      env:
+
+    - name: Terraform Apply
+      if: endsWith(github.head_ref, 'dev') || endsWith(github.head_ref, 'stg') || endsWith(github.head_ref, 'prod')
+      # && github.event_name == 'push'
+      run: | 
+        echo "Worked"
+
+    - name: Show Enviroment variables
+      run: | 
+        #terraform apply -auto-approve -input=false
+        echo ${{ github.ref }}
+        echo ${{ github.head_ref }}
+        echo ${{ github.event_name }}
+        echo ${{ github.repository }}
+        env
+
+  ansible:
+    name: 'Ansible'
+    needs: 'Terraform'
+    runs-on: ubuntu-latest
+    #environment: stg
+    defaults:
+      run:
+        shell: bash
+    env:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
 
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
-      env:
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3

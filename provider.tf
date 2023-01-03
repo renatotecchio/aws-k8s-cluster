@@ -10,9 +10,12 @@ terraform {
   }
 
   backend "s3" {
-    region = "eu-west-1"
     bucket = "terraformstate-renatotecchio"
-    key    = "aws-k8s-cluster"
+    key    = "aws-k8s-cluster.tfstate"
+    region = "eu-west-1"
+    encrypt = true
+    #dynamodb_table = "terraform-state-lock-dynamo"
+
   }
 }
 
