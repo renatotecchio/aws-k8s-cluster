@@ -46,7 +46,7 @@ jobs:
       run: terraform plan -input=false
 
     - name: Terraform Apply
-      if: endsWith(github.head_ref, '12-reconfigure-terraform-pipeline-new')
+      if: endsWith(github.head_ref, 'dev') || endsWith(github.head_ref, 'stg') || endsWith(github.head_ref, 'prod')
       # && github.event_name == 'push'
       run: | 
         echo "Worked"
